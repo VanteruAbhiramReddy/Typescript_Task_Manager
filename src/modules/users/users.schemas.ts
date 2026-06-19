@@ -11,3 +11,6 @@ export const loginSchema = z.object({
     password : z.string().min(8).max(18)
 })
 
+export const deleteSchema = z.object({
+    password : z.string().min(8).max(18)
+})

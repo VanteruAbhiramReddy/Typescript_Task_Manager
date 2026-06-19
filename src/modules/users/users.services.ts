@@ -32,9 +32,12 @@ export async function loginUser({ email, password }: LoginDTO): Promise<number> 
     return data.id;
 }
 
-export async function deleteUser(id: number|unknown):Promise<number> {
-    const res = await db.query<UserIdRow>('DELETE FROM USERS WHERE ID = $1 RETURNING ID;', [id]);
+export async function deleteUser(id: number|unknown,password:string):Promise<number> {
+    const res = await db.query<UserAuthRow>('DELETE FROM USERS WHERE ID = $1 RETURNING ID,PASSWORD;', [id]);
     const data = res.rows[0];
-    if(!data) throw new AppError("User not found!",404);
+    if(!data) throw new AppError("Invalid Credentials!",401);
+    const verify = await bcrypt.compare(password, data.password);
+
+    if (!verify) throw new AppError("Invalid Credentials!", 401);
     return data.id;
 }

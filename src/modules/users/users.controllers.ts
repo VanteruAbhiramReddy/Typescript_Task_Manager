@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import asyncHandler from '../../shared/Utilities/asyncHandler.js';
 import { createUser, loginUser,deleteUser } from './users.services.js';
-import { LoginDTO, SignUpDTO } from './users.types.js';
+import { DeleteDTO, LoginDTO, SignUpDTO } from './users.types.js';
 
 
 export const signUpController = asyncHandler(async (req:Request, res: Response, next: NextFunction) => {
@@ -20,8 +20,9 @@ export const loginController = asyncHandler(async (req: Request, res: Response, 
 })
 
 export const deleteUserController = asyncHandler(async(req:Request,res:Response,next:NextFunction)=>{
+    const{password} = req.validated as DeleteDTO
     const id = req.userId;
-    await deleteUser(id);
+    await deleteUser(id,password);
     next()
 })
 
