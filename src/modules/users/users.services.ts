@@ -3,7 +3,6 @@ import db from "../../shared/db/db.js";
 import { DatabaseError } from "pg";
 import bcrypt from 'bcrypt';
 import { SignUpDTO, LoginDTO, UserAuthRow, UserIdRow } from "./users.types.js"
-import { number } from "zod";
 
 export async function createUser({ name, email, password }: SignUpDTO): Promise<number> {
     try {
