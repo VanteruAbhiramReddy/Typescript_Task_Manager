@@ -12,8 +12,6 @@ import env from './config/env.js';
 import errorMiddleware from './shared/Middlewares/error.middleware.js';
 import users from './modules/users/users.routes.js';
 
-dotenv.config()
-
 const server = express();
 const port = process.env.PORT || 5000;
 
