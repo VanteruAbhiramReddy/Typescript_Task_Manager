@@ -20,7 +20,7 @@ const PgStore = pgsession(session)
 
 
 server.use(cors({
-    origin : "https://pico-task-craft.lovable.app/",
+    origin : "https://pico-task-craft.lovable.app",
     credentials : true
 }))
 server.use(helmet())
