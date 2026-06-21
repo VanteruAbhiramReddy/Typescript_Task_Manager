@@ -1,7 +1,7 @@
+import { Request,Response } from "express";
 import { getTasks,putTask,dropTask,createTask, getTaskById } from "./tasks.services.js";
 import asyncHandler from "../../shared/Utilities/asyncHandler.js";
 import { createTaskDTO, deleteTaskDTO, getTaskDTO, updateTaskDTO } from "./tasks.types.js";
-import { Request,Response } from "express";
 
 
 export const fetchTasks = asyncHandler(async (req:Request, res:Response) => {
@@ -12,8 +12,9 @@ export const fetchTasks = asyncHandler(async (req:Request, res:Response) => {
 
 export const getTask = asyncHandler(async (req:Request<getTaskDTO>,res:Response)=>{
     const {id} = req.params;
-    const userId = req.userId;;
-    const task = await getTaskById(id,userId);
+    const userId = req.userId;
+    const Id = Number(id)
+    const task = await getTaskById(Id,userId);
     res.status(200).json({"success":true,task})
 })
 

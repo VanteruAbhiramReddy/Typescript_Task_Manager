@@ -11,6 +11,7 @@ import db from './shared/db/db.js';
 import env from './config/env.js';
 import errorMiddleware from './shared/Middlewares/error.middleware.js';
 import users from './modules/users/users.routes.js';
+import tasks from './modules/tasks/tasks.routes.js';
 
 const server = express();
 const port = process.env.PORT || 5000;
@@ -43,6 +44,7 @@ server.use(session({
     }
 }))
 
+server.use('/tasks',tasks)
 server.use('/auth',users)
 
 server.use(errorMiddleware)

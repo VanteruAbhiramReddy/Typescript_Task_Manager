@@ -8,18 +8,16 @@ export async function getTasks(userId: number|unknown):Promise<Task[]> {
     return res.rows;
 }
 
-export async function getTaskById(id:string,userId:number|unknown):Promise<Task> {
-    const Id = Number(id);
-    const res = await db.query<Task>("SELECT * FROM TASKS WHERE USER_ID=$1 AND ID=$2 RETURNING *;",[Id,userId]);
+export async function getTaskById(id:number,userId:number|unknown):Promise<Task> {
+    const res = await db.query<Task>("SELECT * FROM TASKS WHERE USER_ID=$1 AND ID=$2;",[userId,id]);
     const data = res.rows[0]
     if(!data) throw new AppError("Task not found!",404);
     return data;
-    
 }
 
 export async function createTask(data:createTaskDTO,userId:number|unknown):Promise<Task> {
-    const { title, description} = data;
-    const res = await db.query<Task>('INSERT INTO TASKS(TITLE,DESCRIPTION,USER_ID) VALUES($1,$2,$3) RETURNING *;', [title, description, userId]);
+    const { title, description,completed} = data;
+    const res = await db.query<Task>('INSERT INTO TASKS(TITLE,DESCRIPTION,USER_ID,COMPLETED) VALUES($1,$2,$3,$4) RETURNING *;', [title, description, userId,completed]);
     return res.rows[0];
 }
 
