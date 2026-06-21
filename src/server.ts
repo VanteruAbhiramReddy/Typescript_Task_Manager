@@ -19,7 +19,10 @@ const port = process.env.PORT || 5000;
 const PgStore = pgsession(session)
 
 
-server.use(cors())
+server.use(cors({
+    origin : "https://pico-task-craft.lovable.app/",
+    credentials : true
+}))
 server.use(helmet())
 server.use(express.json())
 server.use(cookieParser())
