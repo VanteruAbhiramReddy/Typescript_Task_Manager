@@ -14,3 +14,4 @@ export interface User{
 
 export type UserIdRow = Pick<User,"id">
 export type UserAuthRow = Pick<User,"id"|"password">
+export type SafeUser = Pick<User,"id"|"name"|"email">

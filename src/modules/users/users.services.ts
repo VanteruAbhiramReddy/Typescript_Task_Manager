@@ -2,7 +2,7 @@ import AppError from "../../shared/Utilities/appError.js";
 import db from "../../shared/db/db.js";
 import { DatabaseError } from "pg";
 import bcrypt from 'bcrypt';
-import { SignUpDTO, LoginDTO, UserAuthRow, UserIdRow } from "./users.types.js"
+import { SignUpDTO, LoginDTO, UserAuthRow, UserIdRow,SafeUser } from "./users.types.js"
 
 export async function createUser({ name, email, password }: SignUpDTO): Promise<number> {
     try {
@@ -39,4 +39,10 @@ export async function deleteUser(id: number|unknown,password:string):Promise<num
 
     if (!verify) throw new AppError("Invalid Credentials!", 401);
     return data.id;
+}
+
+export async function getDashboard(id:number|unknown):Promise<SafeUser>{
+    const res = await db.query<SafeUser>('SELECT ID,NAME,EMAIL FROM USERS WHERE ID=$1;',[id]);
+    const data = res.rows[0];
+    return data;
 }

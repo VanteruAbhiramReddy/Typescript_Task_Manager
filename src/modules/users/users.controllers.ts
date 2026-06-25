@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import asyncHandler from '../../shared/Utilities/asyncHandler.js';
-import { createUser, loginUser,deleteUser } from './users.services.js';
+import { createUser, loginUser,deleteUser, getDashboard } from './users.services.js';
 import { DeleteDTO, LoginDTO, SignUpDTO } from './users.types.js';
 
 
@@ -24,6 +24,12 @@ export const deleteUserController = asyncHandler(async(req:Request,res:Response,
     const id = req.userId;
     await deleteUser(id,password);
     next()
+})
+
+export const dashboardController = asyncHandler(async (req:Request,res:Response)=>{
+    const id = req.userId;
+    const data = await getDashboard(id);
+    res.json({"success":true,data});
 })
 
 export const manageNewSession = asyncHandler(async (req:Request, res:Response) => {
