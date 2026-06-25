@@ -23,7 +23,7 @@ const PgStore = pgsession(session)
 
 
 server.use(cors({
-    origin : "https://task-manager-51ssw133f-vanteruabhiramreddys-projects.vercel.app/",
+    origin : "https://task-manager-51ssw133f-vanteruabhiramreddys-projects.vercel.app",
     credentials : true
 }))
 server.use(helmet())
