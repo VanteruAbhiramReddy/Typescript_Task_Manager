@@ -10,17 +10,20 @@ import dotenv from 'dotenv'
 import db from './shared/db/db.js'; 
 import env from './config/env.js';
 import errorMiddleware from './shared/Middlewares/error.middleware.js';
+
 import users from './modules/users/users.routes.js';
 import tasks from './modules/tasks/tasks.routes.js';
 
+dotenv.config();
+
 const server = express();
-const port = process.env.PORT || 5000;
+const port = env.PORT || 5000;
 
 const PgStore = pgsession(session)
 
 
 server.use(cors({
-    origin : "https://pico-task-craft.lovable.app",
+    origin : "https://task-manager-51ssw133f-vanteruabhiramreddys-projects.vercel.app/",
     credentials : true
 }))
 server.use(helmet())
