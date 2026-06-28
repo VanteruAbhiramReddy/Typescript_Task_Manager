@@ -12,7 +12,6 @@ export const signUpController = asyncHandler(async (req:Request, res: Response, 
 })
 
 export const loginController = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
-    
     const data = req.validated as LoginDTO;
     const user = await loginUser(data);
     req.userId = user;
