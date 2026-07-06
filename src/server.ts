@@ -23,7 +23,7 @@ const PgStore = pgsession(session)
 
 
 server.use(cors({
-    origin : "https://task-manager-kappa-navy-44.vercel.app",
+    origin : true,
     credentials : true
 }))
 server.use(helmet())
