@@ -32,6 +32,8 @@ server.use(cookieParser())
 
 const secret = env.SESSION_SECRET;
 
+server.set("trust proxy", 1);
+
 server.use(session({
 
     store: new PgStore({
@@ -45,9 +47,8 @@ server.use(session({
 
     cookie: {
         httpOnly: true,
-        secure: false,
-        maxAge: 1000 * 60 * 60 * 24,
-        sameSite : "none"
+        secure: true,
+        maxAge: 1000 * 60 * 60 * 24
     }
 }))
 
