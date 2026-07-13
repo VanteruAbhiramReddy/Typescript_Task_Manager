@@ -35,13 +35,15 @@ export const dashboardController = asyncHandler(async (req: Request, res: Respon
 })
 
 export const manageNewSession = asyncHandler(async (req, res, next) => {
-    console.log("Before:", req.session);
-
     req.session.userId = req.userId;
 
     req.session.save((err) => {
         console.log("Save error:", err);
         console.log("After:", req.session);
+
+        console.log("Secure:", req.secure);
+        console.log("Protocol:", req.protocol);
+        console.log("X-Forwarded-Proto:", req.headers["x-forwarded-proto"]);
 
         if (err) {
             return next(err);
@@ -50,6 +52,7 @@ export const manageNewSession = asyncHandler(async (req, res, next) => {
         res.json({ success: true });
     });
 });
+
 export const logoutController = asyncHandler(async (req: Request, res: Response) => {
     req.session.destroy(() => {
         res.clearCookie("connect.sid");
