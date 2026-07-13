@@ -34,24 +34,41 @@ export const dashboardController = asyncHandler(async (req: Request, res: Respon
     res.json({ "success": true, data });
 })
 
-export const manageNewSession = asyncHandler(async (req, res, next) => {
-    req.session.userId = req.userId;
+export const manageNewSession = asyncHandler(
+    async (req: Request, res: Response, next: NextFunction) => {
+        req.session.regenerate((err) => {
+            if (err) {
+                return next(err);
+            }
 
-    req.session.save((err) => {
-        console.log("Save error:", err);
-        console.log("After:", req.session);
+            req.session.userId = req.userId;
 
-        console.log("Secure:", req.secure);
-        console.log("Protocol:", req.protocol);
-        console.log("X-Forwarded-Proto:", req.headers["x-forwarded-proto"]);
+            req.session.save((err) => {
+                console.log("Save error:", err);
+                console.log("Session ID:", req.sessionID);
+                console.log("Session:", req.session);
+                console.log("Secure:", req.secure);
+                console.log("Protocol:", req.protocol);
+                console.log(
+                    "X-Forwarded-Proto:",
+                    req.headers["x-forwarded-proto"]
+                );
+                console.log(
+                    "Set-Cookie Header:",
+                    res.getHeader("Set-Cookie")
+                );
 
-        if (err) {
-            return next(err);
-        }
+                if (err) {
+                    return next(err);
+                }
 
-        res.json({ success: true });
-    });
-});
+                res.status(200).json({
+                    success: true,
+                });
+            });
+        });
+    }
+);
 
 export const logoutController = asyncHandler(async (req: Request, res: Response) => {
     req.session.destroy(() => {
