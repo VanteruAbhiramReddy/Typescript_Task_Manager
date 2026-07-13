@@ -34,13 +34,22 @@ export const dashboardController = asyncHandler(async (req: Request, res: Respon
     res.json({ "success": true, data });
 })
 
-export const manageNewSession = asyncHandler(async (req: Request, res: Response) => {
-    const id = req.userId;
-    req.session.userId = id;
+export const manageNewSession = asyncHandler(async (req, res, next) => {
+    console.log("Before:", req.session);
 
-    res.json({ "success": true })
-})
+    req.session.userId = req.userId;
 
+    req.session.save((err) => {
+        console.log("Save error:", err);
+        console.log("After:", req.session);
+
+        if (err) {
+            return next(err);
+        }
+
+        res.json({ success: true });
+    });
+});
 export const logoutController = asyncHandler(async (req: Request, res: Response) => {
     req.session.destroy(() => {
         res.clearCookie("connect.sid");
