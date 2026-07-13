@@ -26,11 +26,11 @@ export const deleteUserController = asyncHandler(async (req: Request, res: Respo
 })
 
 export const dashboardController = asyncHandler(async (req: Request, res: Response) => {
-    const id = req.userId;
-    const data = await getDashboard(id);
     console.log("Cookie:", req.headers.cookie);
     console.log("Session ID:", req.sessionID);
     console.log("Session:", req.session);
+    const id = req.userId;
+    const data = await getDashboard(id);
     res.json({ "success": true, data });
 })
 
