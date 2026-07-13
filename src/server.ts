@@ -23,7 +23,7 @@ const PgStore = pgsession(session)
 
 
 server.use(cors({
-    origin: true,
+    origin: env.FRONTEND_URL,
     credentials: true
 }))
 server.use(helmet())
