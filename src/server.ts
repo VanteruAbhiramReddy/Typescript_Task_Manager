@@ -7,7 +7,7 @@ import session from "express-session";
 import pgsession from "connect-pg-simple";
 import dotenv from 'dotenv'
 
-import db from './shared/db/db.js'; 
+import db from './shared/db/db.js';
 import env from './config/env.js';
 import errorMiddleware from './shared/Middlewares/error.middleware.js';
 
@@ -23,8 +23,8 @@ const PgStore = pgsession(session)
 
 
 server.use(cors({
-    origin : true,
-    credentials : true
+    origin: true,
+    credentials: true
 }))
 server.use(helmet())
 server.use(express.json())
@@ -48,12 +48,13 @@ server.use(session({
     cookie: {
         httpOnly: true,
         secure: true,
-        maxAge: 1000 * 60 * 60 * 24
+        sameSite: "none",
+        maxAge: 1000 * 60 * 60 * 24,
     }
 }))
 
-server.use('/tasks',tasks)
-server.use('/auth',users)
+server.use('/tasks', tasks)
+server.use('/auth', users)
 
 server.use(errorMiddleware)
 server.listen(port, () => {
