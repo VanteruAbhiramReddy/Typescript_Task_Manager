@@ -57,6 +57,7 @@ server.use('/tasks', tasks)
 server.use('/auth', users)
 
 server.use(errorMiddleware)
+
 server.listen(port, () => {
     console.log(`Server running at http://localhost:${port}/`);
 })
